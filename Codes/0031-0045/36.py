@@ -1,4 +1,4 @@
-import sys,math,cmath,random,os,time,psutil
+import sys,math,cmath,random,os,time,psutil,hashlib
 from heapq import heappush,heappop
 from bisect import bisect_right,bisect_left
 from collections import Counter,deque,defaultdict
@@ -75,33 +75,12 @@ sys.stderr = open(os.path.join(base, "error.txt"), "w")
 start = time.time()
 
 def solve():
-    ans = set()
-    for i in range(10,100):
-        for j in range(i+1,100):
-            t = gcd(i,j)
-            i1 = i//t
-            j1 = j//t
-            if i%10==0 or j%10==0:
-                continue
-            for x in str(j):
-                if x in str(i):
-                    for m in range(2):
-                        for l in range(2):
-                            j3 = int(str(j)[m])
-                            j4 = int(str(i)[l])
-                            # if i==49 and j==98:
-                            #     print(i1,j1,j3,j4)
-                            if i1*j3==j1*j4 and int(str(j)[1^m])==int(str(i)[1^l]):
-                                ans.add((i,j))
-            
-    val1 = 1
-    val2 = 1
-    for x,y in ans:
-        val1 *= x
-        val2 *= y
-    
-    val2 //= gcd(val1,val2)
-    print(val2)
+    ans = 0
+    for i in range(1,10**6+1):
+        if str(i)==str(i)[::-1] and bin(i)[2:]==bin(i)[2:][::-1]:
+            ans += i
+    print(ans)
+
     return
 
 solve()
@@ -110,4 +89,5 @@ print("\n\n\n########## Stats ##########")
 print(f"Time Taken : {time.time()-start:.2f} s")
 mem = process.memory_info().rss / 1e6
 print(f"Memory Used : {mem:.2f} MB")
-import hashlib;print('Hash Value :',hashlib.md5(open(__file__, 'rb').read()).hexdigest())
+print('Hash Value : ',end='')
+print(hashlib.md5(open(__file__, 'rb').read()).hexdigest())

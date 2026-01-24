@@ -75,33 +75,17 @@ sys.stderr = open(os.path.join(base, "error.txt"), "w")
 start = time.time()
 
 def solve():
-    ans = set()
-    for i in range(10,100):
-        for j in range(i+1,100):
-            t = gcd(i,j)
-            i1 = i//t
-            j1 = j//t
-            if i%10==0 or j%10==0:
-                continue
-            for x in str(j):
-                if x in str(i):
-                    for m in range(2):
-                        for l in range(2):
-                            j3 = int(str(j)[m])
-                            j4 = int(str(i)[l])
-                            # if i==49 and j==98:
-                            #     print(i1,j1,j3,j4)
-                            if i1*j3==j1*j4 and int(str(j)[1^m])==int(str(i)[1^l]):
-                                ans.add((i,j))
-            
-    val1 = 1
-    val2 = 1
-    for x,y in ans:
-        val1 *= x
-        val2 *= y
+    # 9! * x <= 10**x
+    ans = 0
+    for i in range(3,10**7):
+        val = 0
+        for j in str(i):
+            val += math.factorial(int(j))
+        if val==i:
+            ans += i
     
-    val2 //= gcd(val1,val2)
-    print(val2)
+    print(ans)
+
     return
 
 solve()
